@@ -10,7 +10,7 @@ def MXnet_record_to_folder(dataset_dir, save_dir=None):
     import mxnet as mx
     from tqdm import tqdm
 
-    if save_dir == None:
+    if save_dir is None:
         save_dir = (dataset_dir[:-1] if dataset_dir.endswith("/") else dataset_dir) + "_112x112_folders"
     idx_path = os.path.join(dataset_dir, "train.idx")
     bin_path = os.path.join(dataset_dir, "train.rec")
@@ -35,20 +35,20 @@ def MXnet_record_to_folder(dataset_dir, save_dir=None):
             ff.write(img)
 
 
-def MXnet_bin_files_to_tf(test_bins, limit=0):
+def MXnet_bin_files_to_tf(test_bins, save_bins,limit=0):
     import io
     import pickle
     import tensorflow as tf
     from skimage.io import imread
 
     print("test_bins =", test_bins)
-    for test_bin_file in test_bins:
+    for test_bin_file,save_bin_file in zip(test_bins,save_bins):
         with open(test_bin_file, "rb") as ff:
             bins, issame_list = pickle.load(ff, encoding="bytes")
 
         bb = [tf.image.encode_jpeg(imread(io.BytesIO(ii))).numpy() for ii in bins[: limit * 2] + bins[-limit * 2 :]]
-        print("Saving to %s" % test_bin_file)
-        with open(test_bin_file, "wb") as ff:
+        print("Saving to %s" % save_bin_file)
+        with open(save_bin_file, "wb") as ff:
             pickle.dump([bb, issame_list[:limit] + issame_list[-limit:]], ff)
 
 
@@ -61,7 +61,8 @@ if __name__ == "__main__":
     parser.add_argument("-S", "--save_dir", default=None, help="Folder path for saving dataset images")
 
     args = parser.parse_known_args(sys.argv[1:])[0]
-    if args.test_bins != None and len(args.test_bins) != 0:
-        args.test_bins = [os.path.join(args.dataset_dir, ii) for ii in args.test_bins]
-        MXnet_bin_files_to_tf(args.test_bins)
+    if args.test_bins is not None and len(args.test_bins) != 0:
+        test_bins = [os.path.join(args.dataset_dir, ii) for ii in args.test_bins]
+        save_bins = [os.path.join(args.save_dir, ii) for ii in args.test_bins]
+        MXnet_bin_files_to_tf(test_bins,save_bins)
     MXnet_record_to_folder(args.dataset_dir, args.save_dir)

@@ -219,6 +219,7 @@ class Triplet_dataset:
         image_names, image_classes, embeddings, classes, _ = pre_process_folder(data_path, image_names_reg, image_classes_rule)
         image_per_class = max(4, image_per_class)
         pick, _ = pick_by_image_per_class(image_classes, image_per_class)
+        print(pick)
         image_names, image_classes = image_names[pick].astype(str), image_classes[pick]
         self.classes = classes
 

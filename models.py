@@ -1,7 +1,8 @@
 import tensorflow as tf
 from tensorflow import keras
 import tensorflow.keras.backend as K
-
+import larq as lq
+import larq_zoo
 
 def print_buildin_models():
     print(
@@ -25,8 +26,9 @@ def __init_model_from_name__(name, input_shape=(112, 112, 3), weights="imagenet"
         xx = keras.applications.MobileNet(input_shape=input_shape, include_top=False, weights=weights, **kwargs)
     elif name_lower == "mobilenet_m1":
         from backbones import mobilenet
-
         xx = mobilenet.MobileNet(input_shape=input_shape, include_top=False, weights=None, **kwargs)
+    elif name_lower == "binarydensenet":
+        xx = larq_zoo.literature.BinaryDenseNet45(input_shape=input_shape,include_top=False,weights=None, **kwargs)
     elif name_lower == "mobilenetv2":
         xx = keras.applications.MobileNetV2(input_shape=input_shape, include_top=False, weights=weights, **kwargs)
     elif name_lower == "r34" or name_lower == "r50" or name_lower == "r100" or name_lower == "r101":
