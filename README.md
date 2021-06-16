@@ -1,10 +1,14 @@
-# ___Keras insightface___
+# ___Keras insightface with LARQ framework integration___
 ***
 
 # License
-  This is the keras implementation of [deepinsight/insightface](https://github.com/deepinsight/insightface), and is released under the MIT License. There is no limitation for both acadmic and commercial usage.
+  This is the keras (Tensorflow v2.5) implementation of [deepinsight/insightface](https://github.com/deepinsight/insightface) integrated with the [Larq](https://github.com/larq/larq) framework for binary and quantized networks (v0.11.2), and is released under the MIT License. There is no limitation for both acadmic and commercial usage.
+  
+  The original Keras insightface base code is available at [leondgarse/Keras_insightface](https://github.com/leondgarse/Keras_insightface)
 
   The training data containing the annotation (and the models trained with these data) are available for non-commercial research purposes only.
+  
+  The rest of the README.md details the functionality of the base code.
 # Table of Contents
   <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
